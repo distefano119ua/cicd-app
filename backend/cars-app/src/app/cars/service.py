@@ -5,7 +5,7 @@ import re
 from pathlib import Path
 from typing import Any
 
-from config import settings
+from app.config import settings
 from motor.motor_asyncio import AsyncIOMotorClient
 
 

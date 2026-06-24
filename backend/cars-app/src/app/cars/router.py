@@ -5,9 +5,7 @@ from typing import Any
 from fastapi import APIRouter, Depends, HTTPException, Query
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from cars.service import get_cars_from_mongodb, load_cars_csv_to_mongodb
-
-from cars.service import (
+from app.cars.service import (
     get_avg_price_by_company,
     get_cars_from_mongodb,
     load_cars_csv_to_mongodb,

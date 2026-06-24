@@ -1,12 +1,12 @@
-import asyncio
 import json
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 
-from cars.router import get_mongo_client, router as cars_router
-from cars.service import load_cars_csv_to_mongodb
-from config import settings
+from app.cars.router import get_mongo_client, router as cars_router
+from app.cars.service import load_cars_csv_to_mongodb
+from app.config import settings
+
 from fastapi import FastAPI
 from motor.motor_asyncio import AsyncIOMotorClient
 from pymongo.errors import PyMongoError
@@ -103,6 +103,7 @@ async def lifespan(app: FastAPI):
                     "created_at": datetime.now(timezone.utc),
                 }
             )
+    yield
 
     if mongo_client is not None:
         mongo_client.close()
