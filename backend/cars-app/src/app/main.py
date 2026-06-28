@@ -132,4 +132,11 @@ app.include_router(cars_router)
 async def health_check():
     return {"status": "very ok"}
 
-    
+
+@app.get("/health/mongo")
+async def health_check_mongo():
+    mongo_available = await check_mongodb_connection()
+    if mongo_available:
+        return {"status": "ok"}
+    else:
+        return {"status": "error", "message": "MongoDB is not available"}
