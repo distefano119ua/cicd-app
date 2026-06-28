@@ -139,4 +139,4 @@ async def health_check_mongo():
     if mongo_available:
         return {"status": "ok"}
     else:
-        return {"status": "error", "message": "MongoDB is not available"}
+        return {"status": "error", "message": "MongoDB is not available, please check"}
