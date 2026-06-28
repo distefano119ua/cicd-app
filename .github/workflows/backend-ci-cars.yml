@@ -64,3 +64,20 @@ jobs:
           platforms: linux/amd64,linux/arm64
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/cicd-app-backend-cars:${{ github.ref_name }}
+
+      - name: Update GitOps backend image tag
+        if: startsWith(github.ref, 'refs/tags/backend-cars-v')
+        run: |
+          git clone https://x-access-token:${{ secrets.GITOPS_TOKEN }}@github.com/distefano119ua/cicd-app-gitops.git gitops
+
+          cd gitops
+
+          sed -i "s/tag: backend-cars-v.*/tag: ${{ github.ref_name }}/" charts/backend-cars/values.yaml
+          sed -i "s/appVersion: .*/appVersion: \"${{ github.ref_name }}\"/" charts/backend-cars/Chart.yaml
+
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add charts/backend-cars/values.yaml charts/backend-cars/Chart.yaml
+          git commit -m "update backend-cars image to ${{ github.ref_name }}"
+          git push
